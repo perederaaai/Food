@@ -1,18 +1,18 @@
-import {aa} from '../dist/timer'
-console.log(aa)
-// import { calculationCalories } from '../dist/calculator'
-// calculationCalories();
-// import a from '../dist/slider';
-// import offerSlider from '../dist/slider';
-// import moduleWindowData from '../dist/moduleWindowData';
-// import tabs from '../dist/tabs';
-// a()
+import { calculationCalories } from '../dist/calculator'
+import { offerSlider } from '../dist/slider';
+import { moduleWindowData } from '../dist/moduleWindowData';
+import { tabs } from '../dist/tabs';
+import { moduleOpenClose } from '../dist/moduleOpenClose';
+import {timer} from '../dist/timer';
+import {cards} from '../dist/cards';
 
 
 
-
-// calculationCalories()
-// offerSlider()
-// moduleWindowData()
-// tabs()
+calculationCalories();
+offerSlider();
+moduleWindowData();
+tabs();
+moduleOpenClose();
+timer();
+cards();
 

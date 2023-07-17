@@ -1,145 +1,143 @@
 // 'use strict'
 window.addEventListener('DOMContentLoaded', () => {
 
-  const tabsContent = document.querySelectorAll('.tabcontent');
-  const tabItem = document.querySelectorAll('.tabheader__item');
-  const body = document.body
-
-  function slideTabs() {
-    tabItem.forEach((item, i) => {
-      item.addEventListener('click', () => {
-        hideHeaderActiveClass();
-        item.classList.add('tabheader__item_active')
-        hideTabs();
-        showTabs(i);
-      })
-    });
-    hideTabs();
-    showTabs();
-  }
-
-  showTabs = (i = 0) => tabsContent[i].style.display = 'block';
-
-  function hideTabs() {
-    tabsContent.forEach(item => {
-      item.style.display = 'none'
-    })
-  }
-
-  slideTabs();
-
-  function hideHeaderActiveClass() {
-    tabItem.forEach(item => {
-      item.classList.remove('tabheader__item_active')
-    })
-  }
+  // const tabsContent = document.querySelectorAll('.tabcontent');
+  // const tabItem = document.querySelectorAll('.tabheader__item');
+  // function slideTabs() {
+  //   tabItem.forEach((item, i) => {
+  //     item.addEventListener('click', () => {
+  //       hideHeaderActiveClass();
+  //       item.classList.add('tabheader__item_active')
+  //       hideTabs();
+  //       showTabs(i);
+  //     })
+  //   });
+  //   hideTabs();
+  //   showTabs();
+  // }
+  //
+  // showTabs = (i = 0) => tabsContent[i].style.display = 'block';
+  //
+  // function hideTabs() {
+  //   tabsContent.forEach(item => {
+  //     item.style.display = 'none'
+  //   })
+  // }
+  //
+  // slideTabs();
+  //
+  // function hideHeaderActiveClass() {
+  //   tabItem.forEach(item => {
+  //     item.classList.remove('tabheader__item_active')
+  //   })
+  // }
 
 
-  let deadline = '2023-06-26';
-
-  function getTimeDifference(endtime) {
-    const t = Date.parse(endtime) - (Date.parse(new Date()));
-    let days = Math.floor(t / 1000 / 60 / 60 / 24);
-    if (days < 10) {
-      days = days.toString().padStart(2, '0')
-    }
-    let hours = Math.floor((t / 1000 / 60 / 60) % 24).toString().padStart(2, '0');
-    let minutes = Math.floor((t / 1000 / 60) % 60).toString().padStart(2, '0');
-    let seconds = Math.floor((t / 1000) % 60).toString().padStart(2, '0');
-    if (t <= 0) {
-      days = 0;
-      hours = 0;
-      minutes = 0;
-      seconds = 0;
-    }
-
-    return {
-      'days': days,
-      'hours': hours,
-      'minutes': minutes,
-      'seconds': seconds,
-    }
-  }
-
-  getTimeDifference(deadline)
-
-  function getTimerElement(selector) {
-
-    let timer = document.querySelector(selector),
-      days = timer.querySelector('#days'),
-      hours = timer.querySelector('#hours'),
-      minutes = timer.querySelector('#minutes'),
-      seconds = timer.querySelector('#seconds');
-    timeInterval = setInterval(setTime, 1000);
-    setTime()
-    if (Date.parse(deadline) <= (Date.parse(new Date()))) {
-      clearInterval(timeInterval)
-    }
-
-    function setTime() {
-      const show = getTimeDifference(deadline)
-      days.innerHTML = show.days;
-      hours.innerHTML = show.hours;
-      minutes.innerHTML = show.minutes;
-      seconds.innerHTML = show.seconds;
-    }
-  }
-
-  getTimerElement('.timer')
-
-
-  const modalBtn = document.querySelectorAll('[data-modalBtn]');
-  const modalWindow = document.querySelector('[data-modal-window]');
-  const modalCloseBtn = document.querySelector('[data-modal-close]');
-  const modalDialog = document.querySelector('.modal__dialog');
-  const showModalFromTime = setInterval(openModal, 50000);
-
-  let flag;
-  flag = false
-
-  function openModal() {
-    modalWindow.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    clearInterval(showModalFromTime)
-  }
-
-  modalBtn.forEach(item => {
-    item.addEventListener('click', () => {
-      openModal()
-      flag = true
-    })
-  })
-
-  window.addEventListener('scroll', openModalFromScroll);
-
-  function openModalFromScroll() {
-    if (((window.scrollY + window.innerHeight + 6) >= document.body.scrollHeight) && (flag === false)) {
-      openModal()
-      removeEventListener('scroll', openModalFromScroll)
-    }
-  }
-
-  function closeModal() {
-    modalWindow.style.display = 'none';
-    document.body.style.overflow = ''
-  }
-
-  window.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape' && (modalWindow.style.display === 'block')) {
-      closeModal()
-    }
-  })
-
-  body.addEventListener('click', (function (event) {
-    if (event.target === modalWindow) {
-      closeModal()
-    }
-  }))
+  // let deadline = '2023-06-26';
+  //
+  // function getTimeDifference(endtime) {
+  //   const t = Date.parse(endtime) - (Date.parse(new Date()));
+  //   let days = Math.floor(t / 1000 / 60 / 60 / 24);
+  //   if (days < 10) {
+  //     days = days.toString().padStart(2, '0')
+  //   }
+  //   let hours = Math.floor((t / 1000 / 60 / 60) % 24).toString().padStart(2, '0');
+  //   let minutes = Math.floor((t / 1000 / 60) % 60).toString().padStart(2, '0');
+  //   let seconds = Math.floor((t / 1000) % 60).toString().padStart(2, '0');
+  //   if (t <= 0) {
+  //     days = 0;
+  //     hours = 0;
+  //     minutes = 0;
+  //     seconds = 0;
+  //   }
+  //
+  //   return {
+  //     'days': days,
+  //     'hours': hours,
+  //     'minutes': minutes,
+  //     'seconds': seconds,
+  //   }
+  // }
+  //
+  // getTimeDifference(deadline)
+  //
+  // function getTimerElement(selector) {
+  //
+  //   let timer = document.querySelector(selector),
+  //     days = timer.querySelector('#days'),
+  //     hours = timer.querySelector('#hours'),
+  //     minutes = timer.querySelector('#minutes'),
+  //     seconds = timer.querySelector('#seconds');
+  //   timeInterval = setInterval(setTime, 1000);
+  //   setTime()
+  //   if (Date.parse(deadline) <= (Date.parse(new Date()))) {
+  //     clearInterval(timeInterval)
+  //   }
+  //
+  //   function setTime() {
+  //     const show = getTimeDifference(deadline)
+  //     days.innerHTML = show.days;
+  //     hours.innerHTML = show.hours;
+  //     minutes.innerHTML = show.minutes;
+  //     seconds.innerHTML = show.seconds;
+  //   }
+  // }
+  //
+  // getTimerElement('.timer')
 
 
-  modalCloseBtn.addEventListener('click', () => {
-    closeModal()
-  })
+  // const modalBtn = document.querySelectorAll('[data-modalBtn]');
+  // const modalWindow = document.querySelector('[data-modal-window]');
+  // const modalCloseBtn = document.querySelector('[data-modal-close]');
+  // const modalDialog = document.querySelector('.modal__dialog');
+  // const showModalFromTime = setInterval(openModal, 50000);
+  //
+  // let flag;
+  // flag = false
+  //
+  // function openModal() {
+  //   modalWindow.style.display = 'block';
+  //   document.body.style.overflow = 'hidden';
+  //   clearInterval(showModalFromTime)
+  // }
+  //
+  // modalBtn.forEach(item => {
+  //   item.addEventListener('click', () => {
+  //     openModal()
+  //     flag = true
+  //   })
+  // })
+  //
+  // window.addEventListener('scroll', openModalFromScroll);
+  //
+  // function openModalFromScroll() {
+  //   if (((window.scrollY + window.innerHeight + 6) >= document.body.scrollHeight) && (flag === false)) {
+  //     openModal()
+  //     removeEventListener('scroll', openModalFromScroll)
+  //   }
+  // }
+  //
+  // function closeModal() {
+  //   modalWindow.style.display = 'none';
+  //   document.body.style.overflow = ''
+  // }
+  //
+  // window.addEventListener('keydown', (event) => {
+  //   if (event.code === 'Escape' && (modalWindow.style.display === 'block')) {
+  //     closeModal()
+  //   }
+  // })
+  //
+  // body.addEventListener('click', (function (event) {
+  //   if (event.target === modalWindow) {
+  //     closeModal()
+  //   }
+  // }))
+  //
+  //
+  // modalCloseBtn.addEventListener('click', () => {
+  //   closeModal()
+  // })
 
   // const container = document.querySelectorAll('[data-item-container]');
   // const div = document.createElement('div')
