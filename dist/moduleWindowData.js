@@ -1,5 +1,5 @@
-function moduleWindowData (){
-  const form = document.querySelectorAll('form')
+function moduleWindowData (mainForm, personeLocalSt){
+  const form = document.querySelectorAll(mainForm)
 
   const  obj = {};
 
@@ -9,10 +9,10 @@ function moduleWindowData (){
       const formData = new FormData(form[index])
       formData.forEach(function (value,key){
         obj[key] = value
-        console.log(obj)
-        localStorage.setItem('person1', JSON.stringify(obj))
+        localStorage.setItem(personeLocalSt, JSON.stringify(obj))
         // console.log(formData)
       })
+      console.log(obj)
       return obj
     })
   }

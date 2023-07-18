@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 function  calculationCalories (){
   const gender = document.querySelectorAll('.gender');
   let activeGender = '';
+  let coeff = 1.375;
   const getChoise  =  function (arr, cssClass) {
     arr.forEach( item  =>{
       item.addEventListener('click', () =>{
@@ -24,6 +25,7 @@ function  calculationCalories (){
         item.classList.add(cssClass)
         activeGender = item
         localStorage.setItem('personGender', JSON.stringify(activeGender.innerText))
+        showCalories(coeff)
       })
     })
   }
@@ -36,6 +38,7 @@ function  calculationCalories (){
 
     function setToLocalStorage(element){
       element.addEventListener('blur',()=>{
+        showCalories(coeff)
         let key = element.id
         localStorage.setItem(key , JSON.stringify(element.value))
       })
@@ -57,7 +60,6 @@ function  calculationCalories (){
          item.classList.add('calculating__choose-item_active')
          // console.log(item.innerText, 'up')
          localStorage.setItem('personFiso', JSON.stringify(item.innerText))
-         let coeff;
          item.innerText === 'Низкая активность' ? coeff = 1.2 : (item.innerText === 'Невысокая активность' ? coeff = 1.375 : (item.innerText === 'Умеренная активность' ? coeff = 1.55 :coeff = 1.725 ))
          // console.log(chooseFiso)
          // console.log(item)
@@ -75,11 +77,12 @@ function  calculationCalories (){
      let weight = JSON.parse(localStorage.getItem('weight'));
      let age = JSON.parse(localStorage.getItem('age'));
      const sumCalories = ( (10 * +weight) + (6.25 * +height) + (5 * +age))
-     // console.log(gender === 'Женщина' ? sumCalories - 161 : sumCalories + 5)
      numOfCalories.innerText = '';
      numOfCalories.innerText = (gender === 'Женщина' ? sumCalories - 161 : sumCalories + 5) * activity
    }
 }
+
+                                  //add always Upd, not only to last click!!!
 
 
 
@@ -96,14 +99,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   cards: () => (/* binding */ cards)
 /* harmony export */ });
-function cards (){
-  const tabsContent = document.querySelectorAll('.tabcontent');
-  const tabItem = document.querySelectorAll('.tabheader__item');
+function cards (imgWrap, tabHeader, activeClass){
+  const tabsContent = document.querySelectorAll(imgWrap);
+  const tabItem = document.querySelectorAll(tabHeader);
   function slideTabs() {
     tabItem.forEach((item, i) => {
       item.addEventListener('click', () => {
         hideHeaderActiveClass();
-        item.classList.add('tabheader__item_active')
+        item.classList.add(activeClass)
         hideTabs();
         showTabs(i);
       })
@@ -124,7 +127,7 @@ function cards (){
 
   function hideHeaderActiveClass() {
     tabItem.forEach(item => {
-      item.classList.remove('tabheader__item_active')
+      item.classList.remove(activeClass)
     })
   }
 }
@@ -143,12 +146,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   moduleOpenClose: () => (/* binding */ moduleOpenClose)
 /* harmony export */ });
-function moduleOpenClose(){
+function moduleOpenClose(timeToShowModal){
   const modalBtn = document.querySelectorAll('[data-modalBtn]');
   const modalWindow = document.querySelector('[data-modal-window]');
   const modalCloseBtn = document.querySelector('[data-modal-close]');
   const modalDialog = document.querySelector('.modal__dialog');
-  const showModalFromTime = setInterval(openModal, 50000);
+  const showModalFromTime = setInterval(openModal, timeToShowModal);
   const body = document.body;
 
   let flag;
@@ -213,8 +216,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   moduleWindowData: () => (/* binding */ moduleWindowData)
 /* harmony export */ });
-function moduleWindowData (){
-  const form = document.querySelectorAll('form')
+function moduleWindowData (mainForm, personeLocalSt){
+  const form = document.querySelectorAll(mainForm)
 
   const  obj = {};
 
@@ -224,10 +227,10 @@ function moduleWindowData (){
       const formData = new FormData(form[index])
       formData.forEach(function (value,key){
         obj[key] = value
-        console.log(obj)
-        localStorage.setItem('person1', JSON.stringify(obj))
+        localStorage.setItem(personeLocalSt, JSON.stringify(obj))
         // console.log(formData)
       })
+      console.log(obj)
       return obj
     })
   }
@@ -250,19 +253,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   offerSlider: () => (/* binding */ offerSlider)
 /* harmony export */ });
-function offerSlider(){
-  const slidePrev = document.getElementsByClassName('offer__slider-prev');
-  const slideNext = document.getElementsByClassName('offer__slider-next');
-  const slides = document.querySelectorAll('.offer__slide');
+function offerSlider(nextSlide, prevSlide, allSlides, thisSlide, totalSlidesDiv, wrap){
+  const slidePrev = document.getElementsByClassName(prevSlide);
+  const slideNext = document.getElementsByClassName(nextSlide);
+  const slides = document.querySelectorAll(allSlides);
   const slidersBtn = [slidePrev, slideNext];
-  let currentSlide = document.getElementById('current');
-  const totalSlides = document.getElementById('total')
+  let currentSlide = document.getElementById(thisSlide);
+  const totalSlides = document.getElementById(totalSlidesDiv)
   let currentChangeSlide = +currentSlide.innerText;
-  const sliderWrap = document.getElementsByClassName('offer__slider-wrapper');
+  const sliderWrap = document.getElementsByClassName(wrap);
   const carouselWrap = document.createElement('div');
   const dots = []
 
-  for (let i = 0; i <= (+document.getElementById('total').innerText) -1; i++){
+  for (let i = 0; i <= (+document.getElementById(totalSlidesDiv).innerText) -1; i++){
     dots[i] = document.createElement('div')
     dots[i].classList.add('dot')
     carouselWrap.append(dots[i])
@@ -278,9 +281,9 @@ function offerSlider(){
   showSlide()
 
   function goSliders(btn){
-    if (btn[0].classList.value === 'offer__slider-next'){
+    if (btn[0].classList.value === nextSlide){
       (currentChangeSlide <= 3) ? currentChangeSlide += 1 : currentChangeSlide = 1;
-    } if (btn[0].classList.value === 'offer__slider-prev'){
+    } if (btn[0].classList.value === prevSlide){
       (currentChangeSlide >= 2) ? currentChangeSlide -= 1 : currentChangeSlide = (+totalSlides.innerText);
     }
     currentSlide.innerText = (+currentChangeSlide).toString().padStart(2,'0')
@@ -348,7 +351,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   tabs: () => (/* binding */ tabs)
 /* harmony export */ });
-function tabs (){
+function tabs (addClassDiv, h3Class, descrClass, dividerClass, priseClass, costClass, totalClass, currency){
   class Rectangle {
     container = document.querySelectorAll('[data-item-container]');
     div = document.createElement('div');
@@ -368,15 +371,15 @@ function tabs (){
       this.h3.innerText = title;
       this.descr.innerText = descr;
       this.cost.innerText = 'Цена:';
-      this.span.innerText = (price * 36);
-
-      this.div.classList.add('menu__item');
-      this.h3.classList.add('menu__item-subtitle');
-      this.descr.classList.add('menu__item-descr');
-      this.divider.classList.add('menu__item-divider');
-      this.price.classList.add('menu__item-price');
-      this.cost.classList.add('menu__item-cost');
-      this.total.classList.add('menu__item-total');
+      this.span.innerText = (price * currency);
+      // addClassDiv, h3Class, descrClass, dividerClass, priseClass, costClass, totalClass
+      this.div.classList.add(addClassDiv);
+      this.h3.classList.add(h3Class);
+      this.descr.classList.add(descrClass);
+      this.divider.classList.add(dividerClass);
+      this.price.classList.add(priseClass);
+      this.cost.classList.add(costClass);
+      this.total.classList.add(totalClass);
 
 
       this.container[0].append(this.div);
@@ -420,11 +423,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   timer: () => (/* binding */ timer)
 /* harmony export */ });
-function timer(){
-  let deadline = '2023-07-26';
+function timer(deadline){
 
-  function getTimeDifference(endtime) {
-    const t = Date.parse(endtime) - (Date.parse(new Date()));
+  function getTimeDifference(deadline) {
+    const t = Date.parse(deadline) - (Date.parse(new Date()));
     let days = Math.floor(t / 1000 / 60 / 60 / 24);
     if (days < 10) {
       days = days.toString().padStart(2, '0')
@@ -447,7 +449,6 @@ function timer(){
     }
   }
 
-  getTimeDifference(deadline)
 
   function getTimerElement(selector) {
 
@@ -456,14 +457,16 @@ function timer(){
       hours = timer.querySelector('#hours'),
       minutes = timer.querySelector('#minutes'),
       seconds = timer.querySelector('#seconds'),
-      timeInterval = setInterval(setTime(), 1000);
-      setTime()
-    if (Date.parse(deadline) <= (Date.parse(new Date()))) {
-      clearInterval(timeInterval)
-    }
+      timeInterval = setInterval(setTime, 1000);
+      setTime();
 
+    if (Date.parse(deadline) <= (Date.parse(new Date()))) {
+      clearInterval(timeInterval);
+    }else{
+      setInterval(setTime(), 1000);
+    }
     function setTime() {
-      const show = getTimeDifference(deadline)
+      const show = getTimeDifference(deadline);
       days.innerHTML = show.days;
       hours.innerHTML = show.hours;
       minutes.innerHTML = show.minutes;
@@ -472,6 +475,7 @@ function timer(){
   }
 
   getTimerElement('.timer')
+
 }
 
 
@@ -556,17 +560,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+window.addEventListener('DOMContentLoaded', () => {
 
 (0,_dist_calculator__WEBPACK_IMPORTED_MODULE_0__.calculationCalories)();
-(0,_dist_slider__WEBPACK_IMPORTED_MODULE_1__.offerSlider)();
-(0,_dist_moduleWindowData__WEBPACK_IMPORTED_MODULE_2__.moduleWindowData)();
-(0,_dist_tabs__WEBPACK_IMPORTED_MODULE_3__.tabs)();
-(0,_dist_moduleOpenClose__WEBPACK_IMPORTED_MODULE_4__.moduleOpenClose)();
-(0,_dist_timer__WEBPACK_IMPORTED_MODULE_5__.timer)();
-(0,_dist_cards__WEBPACK_IMPORTED_MODULE_6__.cards)();
+(0,_dist_slider__WEBPACK_IMPORTED_MODULE_1__.offerSlider)('offer__slider-next', 'offer__slider-prev', '.offer__slide', 'current', 'total', 'offer__slider-wrapper');
+(0,_dist_moduleWindowData__WEBPACK_IMPORTED_MODULE_2__.moduleWindowData)('form', 'person1');
+(0,_dist_tabs__WEBPACK_IMPORTED_MODULE_3__.tabs)('menu__item', 'menu__item-subtitle', 'menu__item-descr', 'menu__item-divider', 'menu__item-price', 'menu__item-cost', 'menu__item-total', 36);
+(0,_dist_moduleOpenClose__WEBPACK_IMPORTED_MODULE_4__.moduleOpenClose)(50000);
+(0,_dist_timer__WEBPACK_IMPORTED_MODULE_5__.timer)('2023-07-26');
+(0,_dist_cards__WEBPACK_IMPORTED_MODULE_6__.cards)('.tabcontent', '.tabheader__item', 'tabheader__item_active', );
 
-
+})
 })();
 
 /******/ })()

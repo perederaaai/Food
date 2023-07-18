@@ -1,6 +1,7 @@
 function  calculationCalories (){
   const gender = document.querySelectorAll('.gender');
   let activeGender = '';
+  let coeff = 1.375;
   const getChoise  =  function (arr, cssClass) {
     arr.forEach( item  =>{
       item.addEventListener('click', () =>{
@@ -10,6 +11,7 @@ function  calculationCalories (){
         item.classList.add(cssClass)
         activeGender = item
         localStorage.setItem('personGender', JSON.stringify(activeGender.innerText))
+        showCalories(coeff)
       })
     })
   }
@@ -22,6 +24,7 @@ function  calculationCalories (){
 
     function setToLocalStorage(element){
       element.addEventListener('blur',()=>{
+        showCalories(coeff)
         let key = element.id
         localStorage.setItem(key , JSON.stringify(element.value))
       })
@@ -43,7 +46,6 @@ function  calculationCalories (){
          item.classList.add('calculating__choose-item_active')
          // console.log(item.innerText, 'up')
          localStorage.setItem('personFiso', JSON.stringify(item.innerText))
-         let coeff;
          item.innerText === 'Низкая активность' ? coeff = 1.2 : (item.innerText === 'Невысокая активность' ? coeff = 1.375 : (item.innerText === 'Умеренная активность' ? coeff = 1.55 :coeff = 1.725 ))
          // console.log(chooseFiso)
          // console.log(item)
@@ -61,11 +63,12 @@ function  calculationCalories (){
      let weight = JSON.parse(localStorage.getItem('weight'));
      let age = JSON.parse(localStorage.getItem('age'));
      const sumCalories = ( (10 * +weight) + (6.25 * +height) + (5 * +age))
-     // console.log(gender === 'Женщина' ? sumCalories - 161 : sumCalories + 5)
      numOfCalories.innerText = '';
      numOfCalories.innerText = (gender === 'Женщина' ? sumCalories - 161 : sumCalories + 5) * activity
    }
 }
+
+                                  //add always Upd, not only to last click!!!
 
 
 export {calculationCalories}

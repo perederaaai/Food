@@ -1,11 +1,11 @@
-function cards (){
-  const tabsContent = document.querySelectorAll('.tabcontent');
-  const tabItem = document.querySelectorAll('.tabheader__item');
+function cards (imgWrap, tabHeader, activeClass){
+  const tabsContent = document.querySelectorAll(imgWrap);
+  const tabItem = document.querySelectorAll(tabHeader);
   function slideTabs() {
     tabItem.forEach((item, i) => {
       item.addEventListener('click', () => {
         hideHeaderActiveClass();
-        item.classList.add('tabheader__item_active')
+        item.classList.add(activeClass)
         hideTabs();
         showTabs(i);
       })
@@ -26,7 +26,7 @@ function cards (){
 
   function hideHeaderActiveClass() {
     tabItem.forEach(item => {
-      item.classList.remove('tabheader__item_active')
+      item.classList.remove(activeClass)
     })
   }
 }

@@ -1,16 +1,16 @@
-function offerSlider(){
-  const slidePrev = document.getElementsByClassName('offer__slider-prev');
-  const slideNext = document.getElementsByClassName('offer__slider-next');
-  const slides = document.querySelectorAll('.offer__slide');
+function offerSlider(nextSlide, prevSlide, allSlides, thisSlide, totalSlidesDiv, wrap){
+  const slidePrev = document.getElementsByClassName(prevSlide);
+  const slideNext = document.getElementsByClassName(nextSlide);
+  const slides = document.querySelectorAll(allSlides);
   const slidersBtn = [slidePrev, slideNext];
-  let currentSlide = document.getElementById('current');
-  const totalSlides = document.getElementById('total')
+  let currentSlide = document.getElementById(thisSlide);
+  const totalSlides = document.getElementById(totalSlidesDiv)
   let currentChangeSlide = +currentSlide.innerText;
-  const sliderWrap = document.getElementsByClassName('offer__slider-wrapper');
+  const sliderWrap = document.getElementsByClassName(wrap);
   const carouselWrap = document.createElement('div');
   const dots = []
 
-  for (let i = 0; i <= (+document.getElementById('total').innerText) -1; i++){
+  for (let i = 0; i <= (+document.getElementById(totalSlidesDiv).innerText) -1; i++){
     dots[i] = document.createElement('div')
     dots[i].classList.add('dot')
     carouselWrap.append(dots[i])
@@ -26,9 +26,9 @@ function offerSlider(){
   showSlide()
 
   function goSliders(btn){
-    if (btn[0].classList.value === 'offer__slider-next'){
+    if (btn[0].classList.value === nextSlide){
       (currentChangeSlide <= 3) ? currentChangeSlide += 1 : currentChangeSlide = 1;
-    } if (btn[0].classList.value === 'offer__slider-prev'){
+    } if (btn[0].classList.value === prevSlide){
       (currentChangeSlide >= 2) ? currentChangeSlide -= 1 : currentChangeSlide = (+totalSlides.innerText);
     }
     currentSlide.innerText = (+currentChangeSlide).toString().padStart(2,'0')

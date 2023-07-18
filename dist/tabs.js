@@ -1,4 +1,4 @@
-function tabs (){
+function tabs (addClassDiv, h3Class, descrClass, dividerClass, priseClass, costClass, totalClass, currency){
   class Rectangle {
     container = document.querySelectorAll('[data-item-container]');
     div = document.createElement('div');
@@ -18,15 +18,15 @@ function tabs (){
       this.h3.innerText = title;
       this.descr.innerText = descr;
       this.cost.innerText = 'Цена:';
-      this.span.innerText = (price * 36);
-
-      this.div.classList.add('menu__item');
-      this.h3.classList.add('menu__item-subtitle');
-      this.descr.classList.add('menu__item-descr');
-      this.divider.classList.add('menu__item-divider');
-      this.price.classList.add('menu__item-price');
-      this.cost.classList.add('menu__item-cost');
-      this.total.classList.add('menu__item-total');
+      this.span.innerText = (price * currency);
+      // addClassDiv, h3Class, descrClass, dividerClass, priseClass, costClass, totalClass
+      this.div.classList.add(addClassDiv);
+      this.h3.classList.add(h3Class);
+      this.descr.classList.add(descrClass);
+      this.divider.classList.add(dividerClass);
+      this.price.classList.add(priseClass);
+      this.cost.classList.add(costClass);
+      this.total.classList.add(totalClass);
 
 
       this.container[0].append(this.div);

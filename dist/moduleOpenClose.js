@@ -1,9 +1,9 @@
-function moduleOpenClose(){
+function moduleOpenClose(timeToShowModal){
   const modalBtn = document.querySelectorAll('[data-modalBtn]');
   const modalWindow = document.querySelector('[data-modal-window]');
   const modalCloseBtn = document.querySelector('[data-modal-close]');
   const modalDialog = document.querySelector('.modal__dialog');
-  const showModalFromTime = setInterval(openModal, 50000);
+  const showModalFromTime = setInterval(openModal, timeToShowModal);
   const body = document.body;
 
   let flag;

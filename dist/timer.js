@@ -1,8 +1,7 @@
-function timer(){
-  let deadline = '2023-07-26';
+function timer(deadline){
 
-  function getTimeDifference(endtime) {
-    const t = Date.parse(endtime) - (Date.parse(new Date()));
+  function getTimeDifference(deadline) {
+    const t = Date.parse(deadline) - (Date.parse(new Date()));
     let days = Math.floor(t / 1000 / 60 / 60 / 24);
     if (days < 10) {
       days = days.toString().padStart(2, '0')
@@ -25,7 +24,6 @@ function timer(){
     }
   }
 
-  getTimeDifference(deadline)
 
   function getTimerElement(selector) {
 
@@ -34,14 +32,16 @@ function timer(){
       hours = timer.querySelector('#hours'),
       minutes = timer.querySelector('#minutes'),
       seconds = timer.querySelector('#seconds'),
-      timeInterval = setInterval(setTime(), 1000);
-      setTime()
-    if (Date.parse(deadline) <= (Date.parse(new Date()))) {
-      clearInterval(timeInterval)
-    }
+      timeInterval = setInterval(setTime, 1000);
+      setTime();
 
+    if (Date.parse(deadline) <= (Date.parse(new Date()))) {
+      clearInterval(timeInterval);
+    }else{
+      setInterval(setTime(), 1000);
+    }
     function setTime() {
-      const show = getTimeDifference(deadline)
+      const show = getTimeDifference(deadline);
       days.innerHTML = show.days;
       hours.innerHTML = show.hours;
       minutes.innerHTML = show.minutes;
@@ -50,6 +50,7 @@ function timer(){
   }
 
   getTimerElement('.timer')
+
 }
 
 export {timer}
